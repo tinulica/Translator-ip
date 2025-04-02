@@ -18,6 +18,9 @@ def load_model(src: str, tgt: str):
     model = MarianMTModel.from_pretrained(model_name)
     return tokenizer, model
 
+# Warm up the most common model to avoid cold start errors
+load_model("en", "ro")
+
 @app.post("/translate")
 async def translate(req: TranslationRequest):
     try:
